@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e2238">
+  <title>Lesvos Pass</title>
+  <meta name="description" content="One card, offers all over Lesvos. Discounts and treats at partner cafés, tavernas, shops and experiences. Valid for 3 months.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%230e2238'/%3E%3Cg transform='translate(12 14) scale(.8)'%3E%3Ccircle cx='60' cy='46' r='22' fill='%23e2702a'/%3E%3Cpath d='M12 84q12-10 24 0t24 0t24 0t24 0' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3Cpath d='M12 104q12-10 24 0t24 0t24 0t24 0' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round' opacity='.45'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="app-page">
+  <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="Lesvos Pass">
+        <svg class="brand-mark" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="46" r="22" fill="#e2702a"/><path d="M12 84q12-10 24 0t24 0t24 0t24 0" stroke="#10263d" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M12 104q12-10 24 0t24 0t24 0t24 0" stroke="#10263d" stroke-width="10" fill="none" stroke-linecap="round" opacity=".45"/></svg>
+        <span class="brand-name">Lesvos Pass</span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="index.html#offers" data-i18n="nav.offers">Offers</a>
+        <a href="index.html#how" data-i18n="nav.how">How it works</a>
+        <a href="index.html#faq" data-i18n="nav.faq">Questions</a>
+        <a href="businesses.html" data-i18n="nav.business">For businesses</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+          <button type="button" data-lang="el" aria-pressed="false">EL</button>
+        </div>
+        <a class="btn btn-sun btn-small" href="index.html#buy" data-i18n="hero.buy">Get your card</a>
+        <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">
+          <span class="visually-hidden" data-i18n="nav.menu">Menu</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="app-main">
+    <div class="app-wrap">
+      <h1 class="app-title" data-i18n="card.title">Your card</h1>
+      <section class="partner-check" id="partner-check" hidden>
+        <p class="pcheck-title" data-i18n="scan.partnerMode">Partner check</p>
+        <div class="pc-body"></div>
+      </section>
+      <div id="card-view"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-col footer-about">
+        <a class="brand brand-light" href="index.html" aria-label="Lesvos Pass">
+          <svg class="brand-mark" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="46" r="22" fill="#e2702a"/><path d="M12 84q12-10 24 0t24 0t24 0t24 0" stroke="#fbfbf8" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M12 104q12-10 24 0t24 0t24 0t24 0" stroke="#fbfbf8" stroke-width="10" fill="none" stroke-linecap="round" opacity=".45"/></svg>
+          <span class="brand-name">Lesvos Pass</span>
+        </a>
+        <p data-i18n="footer.tagline">The discount card for Lesvos</p>
+        <p class="footer-location" data-i18n="footer.location">Mytilene, Lesvos, Greece</p>
+      </div>
+      <nav class="footer-col" aria-label="Explore">
+        <p class="footer-head" data-i18n="footer.explore">Explore</p>
+        <a href="index.html#offers" data-i18n="nav.offers">Offers</a>
+        <a href="index.html#how" data-i18n="nav.how">How it works</a>
+        <a href="index.html#faq" data-i18n="nav.faq">Questions</a>
+        <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+        <a href="businesses.html" data-i18n="nav.business">For businesses</a>
+        <a href="partner.html" data-i18n="footer.partners">Partner area</a>
+      </nav>
+      <nav class="footer-col" aria-label="Legal">
+        <p class="footer-head" data-i18n="footer.legal">Legal</p>
+        <a href="terms.html" data-i18n="footer.terms">Terms of use</a>
+        <a href="sale.html" data-i18n="footer.refunds">Terms of sale</a>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy and cookies</a>
+      </nav>
+      <div class="footer-col">
+        <p class="footer-head" data-i18n="footer.langs">Languages</p>
+        <p>English · Türkçe · Ελληνικά</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>&copy; 2027 Lesvos Pass</p>
+      <p data-i18n="footer.secure">Secure payments. Cards are delivered instantly by email.</p>
+    </div>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/partners.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/card.js"></script>
+</body>
+</html>
