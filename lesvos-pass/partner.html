@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="app-page">
+<body class="app-page partner-page">
   <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
 
   <header class="site-header">
@@ -49,41 +49,127 @@
 
   <main id="main" class="app-main">
     <div class="app-wrap">
-      <h1 class="app-title" data-i18n="partner.title">Partner area</h1>
 
-      <section id="login-view" class="app-card" hidden>
-        <p class="muted" data-i18n="partner.loginIntro">Sign in with the email and password you received from Lesvos Pass.</p>
-        <form id="login-form" class="app-form" novalidate>
-          <label><span data-i18n="partner.email">Email</span><input type="email" id="email" autocomplete="username" required></label>
-          <label><span data-i18n="partner.password">Password</span><input type="password" id="password" autocomplete="current-password" required></label>
-          <p class="form-error" id="login-error" role="alert" hidden></p>
-          <button type="submit" class="btn btn-sun" id="login-btn" data-i18n="partner.login">Sign in</button>
-        </form>
-      </section>
-
-      <section id="scan-view" hidden>
-        <div class="app-card shop-box" id="shop-box" hidden>
-          <p class="shop-name" id="shop-name"></p>
-          <p class="shop-offer"><span data-i18n="partner.yourOffer">Your offer</span>: <strong id="shop-offer"></strong></p>
-        </div>
-
+      <section id="login-view" hidden>
+        <h1 class="app-title" data-i18n="partner.title">Partner area</h1>
         <div class="app-card">
-          <h2 class="app-h2" data-i18n="partner.howTitle">How to scan a card</h2>
-          <p class="muted" data-i18n="partner.how">Open your phone's camera and point it at the customer's QR code.</p>
-          <button type="button" class="btn btn-sun" id="scan-here" hidden data-i18n="partner.scanHere">Scan with this page</button>
-          <video id="scan-video" class="scan-video" playsinline muted hidden></video>
-          <button type="button" class="btn btn-line" id="scan-stop" hidden data-i18n="partner.stop">Stop camera</button>
-
-          <form id="manual-form" class="app-form manual-form" novalidate>
-            <label><span data-i18n="partner.manual">Or type the card number</span>
-              <input type="text" id="card-number" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="LP-26-00001"></label>
-            <button type="submit" class="btn btn-line" data-i18n="partner.check">Check</button>
+          <p class="muted" data-i18n="partner.loginIntro">Sign in with the email and password you received from Lesvos Pass.</p>
+          <form id="login-form" class="app-form" novalidate>
+            <label><span data-i18n="partner.email">Email</span><input type="email" id="email" autocomplete="username" required></label>
+            <label><span data-i18n="partner.password">Password</span><input type="password" id="password" autocomplete="current-password" required></label>
+            <p class="form-error" id="login-error" role="alert" hidden></p>
+            <button type="submit" class="btn btn-sun" id="login-btn" data-i18n="partner.login">Sign in</button>
           </form>
         </div>
+        <p class="pt-small"><a class="text-link" href="businesses.html" data-i18n="pt.notPartner">Not a partner yet? Join Lesvos Pass</a></p>
+      </section>
 
-        <div id="scan-output" class="scan-output" aria-live="polite"></div>
+      <section id="app-view" hidden>
+        <header class="pt-shop">
+          <p class="pt-shop-label" data-i18n="pt.yourShop">Your business</p>
+          <p class="pt-shop-name" id="shop-name">…</p>
+          <p class="pt-shop-offer" id="shop-offer-line"><span data-i18n="partner.yourOffer">Your offer</span>: <strong id="shop-offer"></strong></p>
+        </header>
 
-        <p class="signed-as"><span id="partner-email"></span> · <button type="button" class="link-btn" id="logout-btn" data-i18n="partner.logout">Sign out</button></p>
+        <!-- 1. Scan -->
+        <div class="pt-panel" id="tab-scan" role="tabpanel" aria-labelledby="t-scan">
+          <div class="app-card">
+            <button type="button" class="btn btn-sun pt-scan-btn" id="scan-here" hidden>
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3 M16 4h3a1 1 0 0 1 1 1v3 M20 16v3a1 1 0 0 1-1 1h-3 M8 20H5a1 1 0 0 1-1-1v-3 M4 12h16"/></svg>
+              <span data-i18n="partner.scanHere">Scan with this page</span></button>
+            <video id="scan-video" class="scan-video" playsinline muted hidden></video>
+            <button type="button" class="btn btn-line" id="scan-stop" hidden data-i18n="partner.stop">Stop camera</button>
+            <div class="pt-how" id="scan-how">
+              <span class="pt-how-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3 M16 4h3a1 1 0 0 1 1 1v3 M20 16v3a1 1 0 0 1-1 1h-3 M8 20H5a1 1 0 0 1-1-1v-3 M9 9h6v6H9z"/></svg></span>
+              <div><p class="pt-how-title" data-i18n="partner.howTitle">How to scan a card</p>
+              <p class="muted" data-i18n="partner.how"></p></div>
+            </div>
+            <form id="manual-form" class="app-form manual-form" novalidate>
+              <label><span data-i18n="partner.manual">Or type the card number</span>
+                <input type="text" id="card-number" autocapitalize="characters" autocomplete="off" placeholder="LP-26-00001"></label>
+              <button type="submit" class="btn btn-line" data-i18n="partner.check">Check</button>
+            </form>
+          </div>
+          <div id="scan-output" class="scan-output" aria-live="polite"></div>
+        </div>
+
+        <!-- 2. Results -->
+        <div class="pt-panel" id="tab-stats" role="tabpanel" aria-labelledby="t-stats" hidden>
+          <div class="pt-stats" id="stats-tiles"></div>
+          <div class="app-card">
+            <p class="pt-h" data-i18n="pt.last14">Last 14 days</p>
+            <div class="pt-chart" id="stats-chart"></div>
+          </div>
+          <div class="app-card">
+            <p class="pt-h" data-i18n="pt.recent">Latest uses</p>
+            <ul class="pt-recent" id="stats-recent"></ul>
+          </div>
+        </div>
+
+        <!-- 3. My business -->
+        <div class="pt-panel" id="tab-shop" role="tabpanel" aria-labelledby="t-shop" hidden>
+          <div class="app-card">
+            <p class="pt-h" data-i18n="pt.listing">How visitors see you</p>
+            <ul class="offer-list pt-listing" id="shop-listing"></ul>
+            <a class="text-link" href="index.html#offers" data-i18n="pt.viewSite">See it on the website</a>
+          </div>
+          <div class="app-card">
+            <p class="pt-h" data-i18n="pt.changeTitle">Request a change</p>
+            <p class="muted" data-i18n="pt.changeIntro"></p>
+            <form id="req-form" class="app-form" novalidate>
+              <label><span data-i18n="pt.changeWhat">What would you like to change?</span><select id="req-kind"></select></label>
+              <label><span data-i18n="pt.changeDetails">Details</span><textarea id="req-msg" rows="3"></textarea></label>
+              <p class="form-error" id="req-error" role="alert" hidden></p>
+              <button type="submit" class="btn btn-sun" id="req-btn" data-i18n="pt.changeSend">Send request</button>
+            </form>
+            <p class="pt-ok" id="req-ok" hidden data-i18n="pt.changeThanks">Thank you. We will update your listing and let you know.</p>
+          </div>
+          <div class="app-card">
+            <p class="pt-h" data-i18n="pt.materials">Materials for your shop</p>
+            <button type="button" class="pt-material" id="dl-sticker">
+              <span class="pt-mat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 12l2 2 4-4"/></svg></span>
+              <span><strong data-i18n="pt.sticker">Window sticker</strong><small data-i18n="pt.stickerHint">PDF to print and place at your entrance</small></span>
+            </button>
+            <button type="button" class="pt-material" id="dl-staff">
+              <span class="pt-mat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z M14 3v4h4 M10 12h5 M10 16h5"/></svg></span>
+              <span><strong data-i18n="pt.staff">Guide for your staff</strong><small data-i18n="pt.staffHint">How to scan a card in three steps (PDF)</small></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. Help -->
+        <div class="pt-panel" id="tab-help" role="tabpanel" aria-labelledby="t-help" hidden>
+          <div class="app-card">
+            <p class="pt-h" data-i18n="pt.helpTitle">Quick answers</p>
+            <div class="faq-list" id="help-list"></div>
+          </div>
+          <div class="app-card pt-support">
+            <p class="pt-h" data-i18n="pt.supportTitle">Need help?</p>
+            <p class="muted" data-i18n="pt.supportText">We answer partners directly.</p>
+            <a class="btn btn-whatsapp" id="support-wa" href="#" target="_blank" rel="noopener" data-i18n="contact.whatsapp">Message on WhatsApp</a>
+            <a class="btn btn-line" id="support-mail" href="#" data-i18n="contact.email">Send an email</a>
+          </div>
+          <div class="app-card pt-account">
+            <p class="muted"><span data-i18n="pt.signedAs">Signed in as</span> <strong id="partner-email"></strong></p>
+            <button type="button" class="btn btn-line" id="logout-btn" data-i18n="partner.logout">Sign out</button>
+            <p class="pt-legal"><a href="terms.html" data-i18n="footer.terms">Terms of use</a> · <a href="privacy.html" data-i18n="footer.privacy">Privacy and cookies</a></p>
+          </div>
+        </div>
+
+        <nav class="pt-tabs" role="tablist" aria-label="Partner area">
+          <button type="button" role="tab" id="t-scan" data-tab="scan" aria-selected="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3 M16 4h3a1 1 0 0 1 1 1v3 M20 16v3a1 1 0 0 1-1 1h-3 M8 20H5a1 1 0 0 1-1-1v-3 M4 12h16"/></svg>
+            <span data-i18n="pt.tabScan">Scan</span></button>
+          <button type="button" role="tab" id="t-stats" data-tab="stats" aria-selected="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11 M12 20V5 M19 20v-7 M3 20h18"/></svg>
+            <span data-i18n="pt.tabStats">Results</span></button>
+          <button type="button" role="tab" id="t-shop" data-tab="shop" aria-selected="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l1.5-5h13L20 9 M4 9h16v11H4z M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0 M10 20v-5h4v5"/></svg>
+            <span data-i18n="pt.tabShop">My business</span></button>
+          <button type="button" role="tab" id="t-help" data-tab="help" aria-selected="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14 M12 17v.5"/></svg>
+            <span data-i18n="pt.tabHelp">Help</span></button>
+        </nav>
       </section>
     </div>
   </main>

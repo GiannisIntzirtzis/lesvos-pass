@@ -77,6 +77,17 @@
         return post("/rest/v1/rpc/partner_scan", { p_code: code, p_redeem: !!redeem }, t);
       });
     },
+    
+    // Calls for the signed-in partner
+    me: function () { return LP.authRpc("partner_me", {}); },
+    stats: function () { return LP.authRpc("partner_stats", {}); },
+    request: function (kind, message) { return LP.authRpc("submit_partner_request", { p_kind: kind, p_message: message }); },
+    authRpc: function (name, body) {
+      return LP.token().then(function (t) {
+        if (!t) { var e = new Error("not signed in"); e.status = 401; throw e; }
+        return post("/rest/v1/rpc/" + name, body, t);
+      });
+    },
 
     submitLead: function (data) {
       return post("/rest/v1/rpc/submit_partner_lead", data);
