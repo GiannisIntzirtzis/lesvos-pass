@@ -77,7 +77,7 @@
         return post("/rest/v1/rpc/partner_scan", { p_code: code, p_redeem: !!redeem }, t);
       });
     },
-    
+
     // Calls for the signed-in partner
     me: function () { return LP.authRpc("partner_me", {}); },
     stats: function () { return LP.authRpc("partner_stats", {}); },
