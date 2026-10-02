@@ -15,7 +15,6 @@
     document.body.classList.toggle("pt-signed", signed);
     if (!signed) return;
     $("partner-email").textContent = LP.email() || "";
-    $("scan-here").hidden = !("BarcodeDetector" in window);
     LP.me().then(function (me) {
       if (me && me.partner) { shopId = me.partner; showShop(); }
       else { $("shop-name").textContent = P.t("scan.not_partner"); }
@@ -83,26 +82,74 @@
     out.appendChild(b);
   }
 
+  /* In-page scanner: works on iPhone and Android.
+     Uses the phone's built-in QR reader when available, otherwise the jsQR library. */
+  var JSQR_URL = "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js";
+  var canvas = null, ctx2d = null;
+
+  function loadJsQR() {
+    if (window.jsQR) return Promise.resolve();
+    return new Promise(function (ok, fail) {
+      var s = document.createElement("script");
+      s.src = JSQR_URL; s.onload = ok; s.onerror = fail;
+      document.head.appendChild(s);
+    });
+  }
+
+  function makeDetector() {
+    if ("BarcodeDetector" in window) {
+      try {
+        var bd = new window.BarcodeDetector({ formats: ["qr_code"] });
+        return Promise.resolve(function (video) {
+          return bd.detect(video).then(function (codes) { return codes.length ? codes[0].rawValue : null; });
+        });
+      } catch (e) { /* fall back to jsQR */ }
+    }
+    return loadJsQR().then(function () {
+      canvas = canvas || document.createElement("canvas");
+      ctx2d = ctx2d || canvas.getContext("2d", { willReadFrequently: true });
+      return function (video) {
+        var w = video.videoWidth, h = video.videoHeight;
+        if (!w || !h) return Promise.resolve(null);
+        var scale = Math.min(1, 640 / Math.max(w, h));
+        canvas.width = Math.round(w * scale); canvas.height = Math.round(h * scale);
+        ctx2d.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var img = ctx2d.getImageData(0, 0, canvas.width, canvas.height);
+        var code = window.jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+        return Promise.resolve(code ? code.data : null);
+      };
+    });
+  }
+
   function startCamera() {
-    var video = $("scan-video"), detector;
-    try { detector = new window.BarcodeDetector({ formats: ["qr_code"] }); } catch (e) { return cameraError(); }
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function (s) {
-      stream = s; video.srcObject = s; video.hidden = false; $("scan-stop").hidden = false; $("scan-here").hidden = true;
-      scanning = true; video.play();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return cameraError();
+    var video = $("scan-video");
+    lastRes = null; $("scan-output").innerHTML = "";
+    // Ask for the camera first (must happen right after the tap on iPhone)
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false }).then(function (s) {
+      stream = s; video.srcObject = s;
+      $("scan-box").hidden = false; $("scan-stop").hidden = false; $("scan-here").hidden = true; $("scan-how").hidden = true;
+      return video.play().then(makeDetector);
+    }).then(function (detect) {
+      scanning = true; lastCode = "";
       (function loop() {
         if (!scanning) return;
-        detector.detect(video).then(function (codes) {
-          if (codes.length && codes[0].rawValue !== lastCode) { lastCode = codes[0].rawValue; stopCamera(); check(lastCode); }
-          else requestAnimationFrame(loop);
-        }).catch(function () { requestAnimationFrame(loop); });
+        detect(video).then(function (value) {
+          if (value && scanning) {
+            if (navigator.vibrate) navigator.vibrate(60);
+            stopCamera(); check(value);
+          } else setTimeout(loop, 150);
+        }).catch(function () { setTimeout(loop, 250); });
       })();
-    }).catch(cameraError);
+    }).catch(function () { stopCamera(); cameraError(); });
   }
+
   function stopCamera() {
     scanning = false;
     if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
     stream = null;
-    $("scan-video").hidden = true; $("scan-stop").hidden = true; $("scan-here").hidden = !("BarcodeDetector" in window);
+    var v = $("scan-video"); if (v) v.srcObject = null;
+    $("scan-box").hidden = true; $("scan-stop").hidden = true; $("scan-here").hidden = false; $("scan-how").hidden = false;
   }
   function cameraError() { $("scan-output").innerHTML = '<p class="form-error">' + P.esc(P.t("partner.cameraError")) + '</p>'; }
 

@@ -74,10 +74,14 @@
         <!-- 1. Scan -->
         <div class="pt-panel" id="tab-scan" role="tabpanel" aria-labelledby="t-scan">
           <div class="app-card">
-            <button type="button" class="btn btn-sun pt-scan-btn" id="scan-here" hidden>
+            <button type="button" class="btn btn-sun pt-scan-btn" id="scan-here">
               <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3 M16 4h3a1 1 0 0 1 1 1v3 M20 16v3a1 1 0 0 1-1 1h-3 M8 20H5a1 1 0 0 1-1-1v-3 M4 12h16"/></svg>
-              <span data-i18n="partner.scanHere">Scan with this page</span></button>
-            <video id="scan-video" class="scan-video" playsinline muted hidden></video>
+              <span data-i18n="partner.scanHere">Scan a card</span></button>
+            <div class="scan-box" id="scan-box" hidden>
+              <video id="scan-video" playsinline muted autoplay></video>
+              <span class="scan-frame" aria-hidden="true"></span>
+              <p class="scan-hint" data-i18n="partner.aim">Point the camera at the QR code</p>
+            </div>
             <button type="button" class="btn btn-line" id="scan-stop" hidden data-i18n="partner.stop">Stop camera</button>
             <div class="pt-how" id="scan-how">
               <span class="pt-how-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3 M16 4h3a1 1 0 0 1 1 1v3 M20 16v3a1 1 0 0 1-1 1h-3 M8 20H5a1 1 0 0 1-1-1v-3 M9 9h6v6H9z"/></svg></span>
