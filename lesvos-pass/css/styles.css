@@ -619,3 +619,22 @@ mark.todo { background: #fff1d6; color: #8a4b0f; padding: 0 4px; border-radius: 
 .scan-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .scan-frame { position: absolute; inset: 18%; border-radius: 18px; box-shadow: 0 0 0 9999px rgba(0, 0, 0, .35); border: 3px solid rgba(255, 255, 255, .95); }
 .scan-hint { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; color: #fff; font-weight: 600; font-size: .92rem; text-shadow: 0 1px 4px rgba(0, 0, 0, .6); }
+
+/* ---- Lesvos Explorer (rewards progress on the card page) ---- */
+.explorer { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 18px 20px; }
+.ex-head { display: flex; align-items: center; gap: 16px; }
+.ex-ring { width: 76px; height: 76px; flex-shrink: 0; }
+.ex-track { fill: none; stroke: var(--wash); stroke-width: 7; }
+.ex-fill { fill: none; stroke: var(--sun); stroke-width: 7; stroke-linecap: round; transition: stroke-dasharray .6s ease; }
+.ex-n { font: 700 22px Commissioner, sans-serif; fill: var(--ink); }
+.ex-of { font: 500 11px Commissioner, sans-serif; fill: var(--ink-soft); }
+.ex-title { font-family: Literata, Georgia, serif; font-size: 1.15rem; font-weight: 600; margin: 0; }
+.ex-next { margin: 4px 0 0; color: var(--ink-soft); font-size: .95rem; }
+.ex-steps { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+.ex-steps li { display: flex; align-items: center; gap: 12px; }
+.ex-dot { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; font-weight: 700; font-size: .9rem; background: var(--wash); color: var(--ink-soft); }
+.ex-steps li.is-done .ex-dot { background: var(--sun); color: #fff; }
+.ex-text { display: flex; flex-direction: column; line-height: 1.3; }
+.ex-text small { color: var(--ink-soft); font-size: .82rem; }
+.ex-steps li:not(.is-done) .ex-text strong { color: var(--ink-soft); font-weight: 600; }
+.ex-hint { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--ink-soft); }

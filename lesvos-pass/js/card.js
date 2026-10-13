@@ -61,6 +61,7 @@
         '<p class="pu-title">' + P.esc(used.length ? P.fmt(P.t("card.used"), { n: used.length, total: total }) : P.t("card.usedNone")) + '</p>' +
         (used.length ? '<ul>' + usedNames.map(function (n) { return '<li>' + P.esc(n) + '</li>'; }).join("") + '</ul>' : '') +
       '</div>' : '') +
+      (info && info.state === "valid" && !partnerMode ? explorerHtml(used.length) : '') +
       (!partnerMode ? '<div class="pass-actions">' +
         (info && info.number ? '<div class="pass-downloads">' +
           '<button type="button" class="btn btn-sun" id="dl-pdf">' + dlIcon() + P.esc(P.t("card.pdf")) + '</button>' +
@@ -71,7 +72,37 @@
     if (bp) bp.addEventListener("click", function () { download("pdf"); });
     if (bi) bi.addEventListener("click", function () { download("png"); });
   }
-
+  
+  /* ---- Lesvos Explorer: rewards after 3, 6 and 10 different shops (counted only from scans) ---- */
+  var GOALS = [3, 6, 10];
+  function explorerHtml(n) {
+    var max = GOALS[GOALS.length - 1], next = null;
+    for (var i = 0; i < GOALS.length; i++) if (n < GOALS[i]) { next = GOALS[i]; break; }
+    var C = 2 * Math.PI * 34, done = Math.min(n, max) / max;
+    var head = next
+      ? P.fmt(P.t(next - n === 1 ? "ex.next1" : "ex.next"), { left: next - n, reward: P.t("ex.r" + next) })
+      : P.t("ex.done");
+    return '<section class="explorer" aria-label="Lesvos Explorer">' +
+      '<div class="ex-head">' +
+        '<svg class="ex-ring" viewBox="0 0 80 80" aria-hidden="true">' +
+          '<circle class="ex-track" cx="40" cy="40" r="34"/>' +
+          '<circle class="ex-fill" cx="40" cy="40" r="34" stroke-dasharray="' + (C * done).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 40 40)"/>' +
+          '<text x="40" y="38" text-anchor="middle" class="ex-n">' + Math.min(n, max) + '</text>' +
+          '<text x="40" y="53" text-anchor="middle" class="ex-of">/ ' + max + '</text>' +
+        '</svg>' +
+        '<div><p class="ex-title">Lesvos Explorer</p><p class="ex-next">' + P.esc(head) + '</p></div>' +
+      '</div>' +
+      '<ol class="ex-steps">' + GOALS.map(function (g) {
+        var ok = n >= g;
+        return '<li class="' + (ok ? "is-done" : "") + '">' +
+          '<span class="ex-dot">' + (ok ? '✓' : g) + '</span>' +
+          '<span class="ex-text"><strong>' + P.esc(P.t("ex.r" + g)) + '</strong>' +
+          '<small>' + P.esc(ok ? P.t("ex.unlocked") + " · " + P.t("ex.claim" + g) : P.fmt(P.t("ex.at"), { n: g })) + '</small></span>' +
+        '</li>';
+      }).join("") + '</ol>' +
+      '<p class="ex-hint">' + P.esc(P.t("ex.hint")) + '</p>' +
+    '</section>';
+  }
   function dlIcon() { return '<svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11 M7 10l5 5 5-5 M5 20h14"/></svg>'; }
 
   /* ---- Download the card as an image (PNG) or a PDF, drawn on the phone (works offline) ---- */
